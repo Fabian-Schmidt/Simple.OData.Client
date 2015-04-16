@@ -11,6 +11,7 @@ namespace Simple.OData.Client
         private readonly ODataClientSettings _settings;
         private readonly Session _session;
         private readonly RequestRunner _requestRunner;
+        private bool _isDisposed = false;
         private readonly Lazy<IBatchWriter> _lazyBatchWriter;
         private readonly ODataResponse _batchResponse;
 
@@ -165,6 +166,12 @@ namespace Simple.OData.Client
         public void SetPluralizer(IPluralizer pluralizer)
         {
             _session.Pluralizer = pluralizer;
+        }
+
+        public void Dispose()
+        {
+            _isDisposed = true;
+            _requestRunner.Dispose();
         }
     }
 }
